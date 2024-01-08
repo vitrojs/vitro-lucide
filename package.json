@@ -1,0 +1,29 @@
+{
+  "name": "@vitro/lucide",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./src/index.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "postinstall": "NODE_ENV=production bun build.ts",
+    "build": "bun build.ts"
+  },
+  "trustedDependencies": ["vitro"],
+  "devDependencies": {
+    "bun-types": "^1.0.21",
+    "esbuild": "^0.19.11",
+    "prettier": "^3.1.1"
+  },
+  "peerDependencies": {
+    "vitro": "github:vitrojs/vitro"
+  }
+}

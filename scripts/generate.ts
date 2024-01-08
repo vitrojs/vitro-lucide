@@ -9,6 +9,7 @@ export function generator(cwd: string) {
   const iconsZipball = join(cwd, 'icons.zip')
   const iconsAssetsDir = join(cwd, 'icons')
   const iconsGeneratedSrcDir = join(cwd, 'src/icons')
+  const iconIndex = join(cwd, 'src/index.ts')
 
   async function downloadIcons() {
     console.log('Downloading icons...')
@@ -49,7 +50,7 @@ export function generator(cwd: string) {
       if (file.endsWith('.svg')) {
         const name = file.replace('.svg', '')
         const content = fs
-          .readFileSync(`./icons/${file}`, 'utf8')
+          .readFileSync(`${iconsGeneratedSrcDir}/icons/${file}`, 'utf8')
           .split('\n')
           .map((it) => it.trim())
           .join('')
@@ -76,7 +77,7 @@ export const ${titleName(
       .map((name) => `export {${titleName(name)}} from './icons/${name}'`)
       .join('\n')
 
-    fs.writeFileSync(join(cwd, 'src/index.ts'), indexCode)
+    fs.writeFileSync(iconIndex, indexCode)
 
     fs.rmSync(iconsAssetsDir, { recursive: true, force: true })
   }

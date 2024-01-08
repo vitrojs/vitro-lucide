@@ -31,6 +31,7 @@ buildSync({
   bundle: true,
   minify: true,
   platform: 'browser',
+  tsconfig: path.join(import.meta.dir, 'tsconfig.json'),
   external: [...Object.keys(pkg.peerDependencies)],
 })
 

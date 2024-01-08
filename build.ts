@@ -20,6 +20,7 @@ if (fs.existsSync(dist)) {
   fs.rmSync(dist, { recursive: true, force: true })
 
   console.log('🚛 Generating icons...')
+} else {
   await generate()
 }
 

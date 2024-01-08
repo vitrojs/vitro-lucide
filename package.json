@@ -15,9 +15,14 @@
   ],
   "scripts": {
     "postinstall": "NODE_ENV=production bun build.ts",
-    "build": "bun build.ts"
+    "build": "bun build.ts",
+    "format": "prettier --write src"
   },
-  "trustedDependencies": ["vitro"],
+  "trustedDependencies": [
+    "vitro",
+    "@vitro/zag",
+    "@vitro/ark"
+  ],
   "devDependencies": {
     "bun-types": "^1.0.21",
     "esbuild": "^0.19.11",

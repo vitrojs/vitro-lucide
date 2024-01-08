@@ -1,15 +1,15 @@
 /// <reference types="bun-types" />
 import * as fs from 'node:fs'
-import { join } from 'node:path'
+import * as path from 'node:path'
 import * as process from 'node:process'
 
 const re = />(.*)<\/svg>/
 
 export function generator(cwd: string) {
-  const iconsZipball = join(cwd, 'icons.zip')
-  const iconsAssetsDir = join(cwd, 'icons')
-  const iconsGeneratedSrcDir = join(cwd, 'src/icons')
-  const iconIndex = join(cwd, 'src/index.ts')
+  const iconsZipball = path.join(cwd, 'icons.zip')
+  const iconsAssetsDir = path.join(cwd, 'icons')
+  const iconsGeneratedSrcDir = path.join(cwd, 'src/icons')
+  const iconIndex = path.join(cwd, 'src/index.ts')
 
   async function downloadIcons() {
     console.log('Downloading icons...')
@@ -47,29 +47,28 @@ export function generator(cwd: string) {
     const names: string[] = []
 
     for (const file of files) {
-      if (file.endsWith('.svg')) {
-        const name = file.replace('.svg', '')
-        const content = fs
-          .readFileSync(`${iconsGeneratedSrcDir}/icons/${file}`, 'utf8')
-          .split('\n')
-          .map((it) => it.trim())
-          .join('')
-        const matches = content.match(re)
-        const nodes = matches?.at(1)
-        if (!nodes) {
-          console.error(`Could not parse ${file} content`)
-          process.exit(1)
-        }
+      if (!file.endsWith('.svg')) continue
+      const name = file.replace('.svg', '')
+      const content = fs
+        .readFileSync(path.join(iconsAssetsDir, file), 'utf8')
+        .split('\n')
+        .map((it) => it.trim())
+        .join('')
+      const matches = content.match(re)
+      const nodes = matches?.at(1)
+      if (!nodes) {
+        console.error(`Could not parse ${file} content`)
+        process.exit(1)
+      }
 
-        const code = `import type { LucideProps } from '../types';
+      const code = `import type { LucideProps } from '../types';
 import { Icon } from '../icon';
 export const ${titleName(
-          name,
-        )} = (props: LucideProps) => (<Icon {...props} name='${name}' nodes={\`${nodes}\`} />);`
+        name,
+      )} = (props: LucideProps) => (<Icon {...props} name='${name}' nodes={\`${nodes}\`} />);`
 
-        fs.writeFileSync(join(iconsGeneratedSrcDir, `${name}.tsx`), code)
-        names.push(name)
-      }
+      fs.writeFileSync(path.join(iconsGeneratedSrcDir, `${name}.tsx`), code)
+      names.push(name)
     }
 
     // generate index

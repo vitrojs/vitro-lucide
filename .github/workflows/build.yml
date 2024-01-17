@@ -17,15 +17,11 @@ jobs:
       - run: bun install
       - run: bun run build
       - name: Add dist directory to git
-        run: git add dist/
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "Deploy dist directory to tag ${{ github.ref }}"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Create a tarball
+        run: tar -czvf release.tar.gz dist src package.json README.md
+      - name: Create Release
+        uses: elgohr/Github-Release-Action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          branch: ${{ github.ref }}
+          title: Release ${{ github.ref }}

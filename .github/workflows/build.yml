@@ -16,7 +16,6 @@ jobs:
       - uses: oven-sh/setup-bun@v1
       - run: bun install
       - run: bun run build
-      - name: Add dist directory to git
       - name: Create a tarball
         run: tar -czvf release.tar.gz dist src package.json README.md
       - name: Create Release

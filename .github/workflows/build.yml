@@ -1,0 +1,31 @@
+name: build package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.ref }}
+    - uses: oven-sh/setup-bun@v1
+    - run: bun install
+    - run: bun run build
+    - name: Add dist directory to git
+      run: git add dist/
+    - name: Commit changes
+      run: |
+      git config --local user.email "action@github.com"
+      git config --local user.name "GitHub Action"
+      git commit -m "Deploy dist directory to tag ${{ github.ref }}"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}

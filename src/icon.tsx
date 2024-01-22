@@ -41,7 +41,7 @@ export const Icon: JSX.Component<IconProps> = ({
 					? () =>
 							(Number($$(strokeWidth) ?? defaultAttributes["stroke-width"]) *
 								24) /
-							Number($$(size))
+							Number($$(size) ?? defaultAttributes.width)
 					: () => Number($$(strokeWidth) ?? defaultAttributes["stroke-width"])
 			}
 			class={["lucide", `lucide-${toKebabCase(name)}`, classes]}

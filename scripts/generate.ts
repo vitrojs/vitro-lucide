@@ -65,7 +65,7 @@ export function generator(cwd: string) {
 import { Icon } from '../icon';
 export const ${titleName(
         name,
-      )} = (props: LucideProps) => (<Icon {...props} name='${name}' nodes={\`${nodes}\`} />);`
+      )}: JSX.Component<LucideProps> = (props: LucideProps) => (<Icon {...props} name='${name}' nodes={\`${nodes}\`} />);`
 
       fs.writeFileSync(path.join(iconsGeneratedSrcDir, `${name}.tsx`), code)
       names.push(name)
@@ -73,7 +73,7 @@ export const ${titleName(
 
     // generate index
     const indexCode = names
-      .map((name) => `export {${titleName(name)}} from './icons/${name}'`)
+      .map((name) => `export { ${titleName(name)} } from './icons/${name}'`)
       .join('\n')
 
     fs.writeFileSync(iconIndex, indexCode)

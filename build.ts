@@ -14,25 +14,31 @@ const dist = path.join(import.meta.dir, 'dist')
 const generate = generator(import.meta.dir)
 
 if (fs.existsSync(dist)) {
-  if (isProduction) process.exit(0)
+	if (isProduction) process.exit(0)
 
-  console.log(`🧹 Cleaning dist folder...`)
-  fs.rmSync(dist, { recursive: true, force: true })
+	console.log(`🧹 Cleaning dist folder...`)
+	fs.rmSync(dist, { recursive: true, force: true })
 
-  console.log('🚛 Generating icons...')
+	console.log('🚛 Generating icons...')
 } else {
-  await generate()
+	await generate()
 }
 
 buildSync({
-  entryPoints: ['src/index.ts'],
-  format: 'esm',
-  outdir: 'dist',
-  bundle: true,
-  minify: true,
-  platform: 'browser',
-  tsconfig: path.join(import.meta.dir, 'tsconfig.json'),
-  external: [...Object.keys(pkg.peerDependencies)],
+	entryPoints: ['src/index.ts'],
+	format: 'esm',
+	outdir: 'dist',
+	bundle: true,
+	minify: true,
+	platform: 'browser',
+	tsconfig: path.join(import.meta.dir, 'tsconfig.json'),
+	external: [
+		...Object.keys({
+			...(pkg.dependencies ?? {}),
+			// @ts-ignore
+			...(pkg.peerDependencies ?? {}),
+		}),
+	],
 })
 
 console.log('✅ Build done!')

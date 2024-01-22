@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  vitro:
+    specifier: github:vitrojs/vitro
+    version: github.com/vitrojs/vitro/02f4255542caf06501dbce67446645435494170a
+
 devDependencies:
   '@biomejs/biome':
     specifier: ^1.5.2
@@ -363,6 +368,14 @@ packages:
       '@esbuild/win32-x64': 0.19.11
     dev: true
 
+  /htm@3.1.1:
+    resolution: {integrity: sha512-983Vyg8NwUE7JkZ6NmOqpCZ+sh1bKv2iYTlUkzlWmA5JD2acKoxd4KVxbMmxX/85mtfdnDmTFoNKcg5DGAvxNQ==}
+    dev: false
+
+  /oby@15.1.0:
+    resolution: {integrity: sha512-2ybzrWvIXev6fvVoa0LWP/Kzul6ba8O9s20y9FMmnyoQbo59hckcc2kDmGFPaPfl97IOLL6osC3Q/ceGEHYA0g==}
+    dev: false
+
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
@@ -370,3 +383,13 @@ packages:
   /undici-types@5.28.2:
     resolution: {integrity: sha512-W71OLwDqzIO0d3k07qg1xc7d4cX8SsSwuCO4bQ4V7ITwduXXie/lcImofabP5VV+NvuvSe8ovKvHVJcizVc1JA==}
     dev: true
+
+  github.com/vitrojs/vitro/02f4255542caf06501dbce67446645435494170a:
+    resolution: {tarball: https://codeload.github.com/vitrojs/vitro/tar.gz/02f4255542caf06501dbce67446645435494170a}
+    name: vitro
+    version: 0.57.5
+    requiresBuild: true
+    dependencies:
+      htm: 3.1.1
+      oby: 15.1.0
+    dev: false
